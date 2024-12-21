@@ -231,27 +231,12 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes =
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityFileAsset
-  | Geopoint
-  | Order
-  | Category
-  | Product
-  | Slug
-  | BannerImage
-  | SanityImageCrop
-  | SanityImageHotspot
-  | SanityImageAsset
-  | SanityAssetSourceData
-  | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Order | Category | Product | Slug | BannerImage | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/bannerImage/getBannerImage.ts
 // Variable: Banner_Query
-// Query: *[_type == "bannerImage"][0] {  "firstImage": image1,  "secondImage": image2}
-export type Banner_QueryResult = {
+// Query: *[_type == "bannerImage"] {    "firstImage": image1,    "secondImage": image2  }
+export type Banner_QueryResult = Array<{
   firstImage: {
     asset?: {
       _ref: string;
@@ -262,7 +247,7 @@ export type Banner_QueryResult = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
-  };
+  } | null;
   secondImage: {
     asset?: {
       _ref: string;
@@ -273,12 +258,24 @@ export type Banner_QueryResult = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
-  };
-};
+  } | null;
+}>;
+
+// Source: ./sanity/lib/getAllCategories/getCategories.ts
+// Variable: GET_CATEGORIES
+// Query: *[_type == "category"]|order(name asc)
+export type GET_CATEGORIESResult = Array<{
+  _id: string;
+  _type: "category";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+}>;
 
 // Source: ./sanity/lib/getAllProduct/getProduct.ts
 // Variable: GET_ALL_PRODUCT
-// Query: *[_type == "product"] | order(name asc) {name,  price,"firstImage":images[0],stock,slug}
+// Query: *[_type == "product"] | order(name asc) {name,    price,"firstImage":images[0],stock,slug}
 export type GET_ALL_PRODUCTResult = Array<{
   name: string | null;
   price: number | null;
@@ -293,16 +290,53 @@ export type GET_ALL_PRODUCTResult = Array<{
     crop?: SanityImageCrop;
     _type: "image";
     _key: string;
-  };
+  } | null;
   stock: number | null;
   slug: Slug | null;
 }>;
+
+// Source: ./sanity/lib/productDetails/productDetails.ts
+// Variable: PRODUCT_DETIAL
+// Query: *[_type == "product" && slug.current == "lamp"][0]
+export type PRODUCT_DETIALResult = {
+  _id: string;
+  _type: "product";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  images?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+  description?: string;
+  slug?: Slug;
+  price?: number;
+  category?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "category";
+  }>;
+  stock?: number;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "bannerImage"][0] {\n  "firstImage": image1,\n  "secondImage": image2\n}': Banner_QueryResult;
-    '*[_type == "product"] | order(name asc) {name,\n  price,"firstImage":images[0],stock,slug}\n': GET_ALL_PRODUCTResult;
+    "*[_type == \"bannerImage\"] {\n    \"firstImage\": image1,\n    \"secondImage\": image2\n  }": Banner_QueryResult;
+    "*[_type == \"category\"]|order(name asc)": GET_CATEGORIESResult;
+    "*[_type == \"product\"] | order(name asc) {name,\n    price,\"firstImage\":images[0],stock,slug}\n  ": GET_ALL_PRODUCTResult;
+    "*[_type == \"product\" && slug.current == \"lamp\"][0]": PRODUCT_DETIALResult;
   }
 }

@@ -27,7 +27,7 @@ function Menu() {
       >
         <div>
           <span className="flex items-center justify-between py-4 px-2">
-            <div>Sidebar Content</div>
+            <div>Categories</div>
 
             <X className=" duration-1000" onClick={toggle} />
           </span>
@@ -35,7 +35,7 @@ function Menu() {
       </div>
 
       {!toggleHamburger && (
-        <ChartNoAxesGantt className="sm:hidden duration-150" onClick={toggle} />
+        <ChartNoAxesGantt className="md:hidden duration-150" onClick={toggle} />
       )}
     </>
   );

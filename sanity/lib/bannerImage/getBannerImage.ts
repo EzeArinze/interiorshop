@@ -4,7 +4,7 @@ import { sanityFetch } from "../live";
 export async function getBannerImage() {
   // const Banner_Query = defineQuery(`*[_type == "bannerImage"][0]"}`);
 
-  const Banner_Query = defineQuery(`*[_type == "bannerImage"][0] {
+  const Banner_Query = defineQuery(`*[_type == "bannerImage"] {
     "firstImage": image1,
     "secondImage": image2
   }`);
@@ -17,6 +17,6 @@ export async function getBannerImage() {
     return data.data || {};
   } catch (error) {
     console.log("Failed to fetch Sanity", error);
-    return {};
+    return [];
   }
 }
