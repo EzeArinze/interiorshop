@@ -11,7 +11,7 @@ async function Categories() {
         <h2 className="text-lg font-semibold">Categories </h2>
       </div>
 
-      {data.map((category) => (
+      {data?.map((category) => (
         <div key={category._id} className="inline-block px-2">
           {/* <Link href={`/category/${category.name}`}>
             <h1 className="text-base font-semibold">{category.name}</h1>
