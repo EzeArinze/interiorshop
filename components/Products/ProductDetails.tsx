@@ -1,5 +1,5 @@
 import { PRODUCT_DETIALResult } from "@/sanity.types";
-import { productDetail } from "@/sanity/lib/productDetails/productDetails";
+import { productDetail } from "@/sanity/lib/products/productDetails";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { urlFor } from "@/sanity/lib/image";
@@ -44,7 +44,7 @@ const ProductDetails = async ({ slug }: ProductDetailsProps) => {
             ${Detail.price}
           </div>
 
-          <Button className="w-full lg:w-auto px-6 py-3 text-white font-medium rounded hover:bg-blue-500 transition-colors">
+          <Button className="w-full lg:w-auto px-6 py-3 text-white font-medium rounded hover:bg-secondary transition-colors">
             Add to Cart
           </Button>
         </div>

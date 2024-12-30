@@ -10,6 +10,7 @@ export async function productDetail(slug: string) {
   try {
     const details = await sanityFetch({
       query: PRODUCT_DETIAL,
+      params: { slug },
     });
 
     return details.data || {};

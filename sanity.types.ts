@@ -104,6 +104,7 @@ export type Category = {
   _updatedAt: string;
   _rev: string;
   name?: string;
+  slug?: Slug;
 };
 
 export type Product = {
@@ -261,7 +262,7 @@ export type Banner_QueryResult = Array<{
   } | null;
 }>;
 
-// Source: ./sanity/lib/getAllCategories/getCategories.ts
+// Source: ./sanity/lib/products/getCategories.ts
 // Variable: GET_CATEGORIES
 // Query: *[_type == "category"]|order(name asc)
 export type GET_CATEGORIESResult = Array<{
@@ -271,9 +272,10 @@ export type GET_CATEGORIESResult = Array<{
   _updatedAt: string;
   _rev: string;
   name?: string;
+  slug?: Slug;
 }>;
 
-// Source: ./sanity/lib/getAllProduct/getProduct.ts
+// Source: ./sanity/lib/products/getProduct.ts
 // Variable: GET_ALL_PRODUCT
 // Query: *[_type == "product"] | order(name asc) {name,    price,"firstImage":images[0],stock,slug}
 export type GET_ALL_PRODUCTResult = Array<{
@@ -295,7 +297,42 @@ export type GET_ALL_PRODUCTResult = Array<{
   slug: Slug | null;
 }>;
 
-// Source: ./sanity/lib/productDetails/productDetails.ts
+// Source: ./sanity/lib/products/getProductsByCategories.ts
+// Variable: PRODUCT_BY_CATEGORIES_QUERY
+// Query: *[_type == "product" && references(*[_type == "category" && slug.current == $categorySlug][0]._id)]
+export type PRODUCT_BY_CATEGORIES_QUERYResult = Array<{
+  _id: string;
+  _type: "product";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  images?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+  description?: string;
+  slug?: Slug;
+  price?: number;
+  category?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "category";
+  }>;
+  stock?: number;
+}>;
+
+// Source: ./sanity/lib/products/productDetails.ts
 // Variable: PRODUCT_DETIAL
 // Query: *[_type == "product" && slug.current == "lamp"][0]
 export type PRODUCT_DETIALResult = {
@@ -337,6 +374,7 @@ declare module "@sanity/client" {
     "*[_type == \"bannerImage\"] {\n    \"firstImage\": image1,\n    \"secondImage\": image2\n  }": Banner_QueryResult;
     "*[_type == \"category\"]|order(name asc)": GET_CATEGORIESResult;
     "*[_type == \"product\"] | order(name asc) {name,\n    price,\"firstImage\":images[0],stock,slug}\n  ": GET_ALL_PRODUCTResult;
+    "\n    *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $categorySlug][0]._id)]\n  ": PRODUCT_BY_CATEGORIES_QUERYResult;
     "*[_type == \"product\" && slug.current == \"lamp\"][0]": PRODUCT_DETIALResult;
   }
 }

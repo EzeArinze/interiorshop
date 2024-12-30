@@ -1,4 +1,4 @@
-import { getProducts } from "@/sanity/lib/getAllProduct/getProduct";
+import { getProducts } from "@/sanity/lib/products/getProduct";
 
 import ProductsView from "./ProductsView";
 
