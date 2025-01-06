@@ -277,8 +277,9 @@ export type GET_CATEGORIESResult = Array<{
 
 // Source: ./sanity/lib/products/getProduct.ts
 // Variable: GET_ALL_PRODUCT
-// Query: *[_type == "product"] | order(name asc) {name,    price,"firstImage":images[0],stock,slug}
+// Query: *[_type == "product"] | order(name asc) {_id,name,    price,"firstImage":images[0],stock,slug}
 export type GET_ALL_PRODUCTResult = Array<{
+  _id: string;
   name: string | null;
   price: number | null;
   firstImage: {
@@ -373,7 +374,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"bannerImage\"] {\n    \"firstImage\": image1,\n    \"secondImage\": image2\n  }": Banner_QueryResult;
     "*[_type == \"category\"]|order(name asc)": GET_CATEGORIESResult;
-    "*[_type == \"product\"] | order(name asc) {name,\n    price,\"firstImage\":images[0],stock,slug}\n  ": GET_ALL_PRODUCTResult;
+    "*[_type == \"product\"] | order(name asc) {_id,name,\n    price,\"firstImage\":images[0],stock,slug}\n  ": GET_ALL_PRODUCTResult;
     "\n    *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $categorySlug][0]._id)]\n  ": PRODUCT_BY_CATEGORIES_QUERYResult;
     "*[_type == \"product\" && slug.current == \"lamp\"][0]": PRODUCT_DETIALResult;
   }

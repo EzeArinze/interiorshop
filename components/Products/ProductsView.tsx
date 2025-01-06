@@ -7,13 +7,15 @@ import { AnimatePresence, motion } from "motion/react";
 import ProductImage from "./ProductImage";
 import { ProductViewProp } from "@/lib/types";
 
+import AddToCart from "./AddToCart";
+
 function ProductsView({ data }: ProductViewProp) {
   return (
     <>
       {!data ? (
         <p className="text-center text-gray-500">No Products Available</p>
       ) : (
-        data.map((product) => (
+        data?.map((product) => (
           <AnimatePresence key={product.slug?.current}>
             <motion.div
               layout
@@ -37,8 +39,15 @@ function ProductsView({ data }: ProductViewProp) {
                     </h3>
                   </Link>
 
-                  <div className="mt-2 text-green-600 font-bold text-md">
-                    ${product.price}
+                  <div className="mt-2 font-bold text-md flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
+                    <span className="text-green-600 md:text-left w-[100%]">
+                      ${product.price}
+                    </span>
+
+                    <AddToCart
+                      data={[product]}
+                      disabled={product.stock === 0}
+                    />
                   </div>
                 </div>
               </div>

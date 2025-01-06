@@ -7,7 +7,7 @@ export async function getProducts() {
   // );
 
   const GET_ALL_PRODUCT = defineQuery(
-    `*[_type == "product"] | order(name asc) {name,
+    `*[_type == "product"] | order(name asc) {_id,name,
     price,"firstImage":images[0],stock,slug}
   `
   );
