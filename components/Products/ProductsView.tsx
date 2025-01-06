@@ -1,20 +1,16 @@
 "use client";
 
-import { GET_ALL_PRODUCTResult } from "@/sanity.types";
 // import { urlFor } from "@/sanity/lib/image";
 // import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import ProductImage from "./ProductImage";
-
-interface ProductViewProp {
-  data: GET_ALL_PRODUCTResult;
-}
+import { ProductViewProp } from "@/lib/types";
 
 function ProductsView({ data }: ProductViewProp) {
   return (
     <>
-      {!data || data.length < 1 ? (
+      {!data ? (
         <p className="text-center text-gray-500">No Products Available</p>
       ) : (
         data.map((product) => (

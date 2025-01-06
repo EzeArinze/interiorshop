@@ -1,6 +1,7 @@
 // import dynamic from "next/dynamic";
 
 import ProductDetails from "@/components/Products/ProductDetails";
+// import { revalidatePath } from "next/cache";
 import React, { Suspense } from "react";
 
 // const ProductDetails = dynamic(

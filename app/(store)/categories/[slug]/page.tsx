@@ -14,15 +14,19 @@ async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const data = await getCategories();
 
   return (
-    <div className="mx-auto max-w-2xl px-4 sm:pb-6 lg:max-w-7xl lg:px-8">
-      <div>
-        <h1 className="px-4 lg:px-8 font-bold text-lg text-gray-800 mt-4">
-          Selected Category: {newSlug.toUpperCase()}
-        </h1>
-        <SelectCategories categories={data} />
-        <Suspense key={slug} fallback={<div>Loading...</div>}>
-          <CategoryCard data={productByCategory} />
-        </Suspense>
+    <div className="md:w-[80%] mx-auto py-8">
+      <div className="mx-auto max-w-2xl px-6 sm:pb-6 lg:max-w-7xl lg:px-8">
+        <div>
+          <h1 className="lg:px-8 font-bold text-lg text-gray-800 mt-4">
+            Selected Category: {newSlug.toUpperCase()}
+          </h1>
+          <SelectCategories categories={data} />
+          <div>
+            <Suspense fallback={<div>Loading...</div>}>
+              <CategoryCard data={productByCategory} />
+            </Suspense>
+          </div>
+        </div>
       </div>
     </div>
   );

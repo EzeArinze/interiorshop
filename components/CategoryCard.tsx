@@ -2,12 +2,8 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { PRODUCT_BY_CATEGORIES_QUERYResult } from "@/sanity.types";
 import ProductImage from "./Products/ProductImage";
-
-interface CategoryProps {
-  data: PRODUCT_BY_CATEGORIES_QUERYResult;
-}
+import { CategoryProps } from "@/lib/types";
 
 const CategoryCard = ({ data }: CategoryProps) => {
   return (
@@ -32,7 +28,7 @@ const CategoryCard = ({ data }: CategoryProps) => {
             {/* Category Name */}
             <div className="p-4">
               <Link href={`/product/${product.slug?.current}`}>
-                <h3 className="text-lg font-semibold truncate group-hover:text-blue-500">
+                <h3 className="text-lg font-semibold truncate group-hover:text-gray-600">
                   {product.name}
                 </h3>
               </Link>

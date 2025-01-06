@@ -1,9 +1,10 @@
-import { getProducts } from "@/sanity/lib/products/getProduct";
+// import { getProducts } from "@/sanity/lib/products/getProduct";
 
 import ProductsView from "./ProductsView";
+import { ProductViewProp } from "@/lib/types";
 
-async function Products() {
-  const data = await getProducts();
+function Products({ data }: ProductViewProp) {
+  // const data = await getProducts();
 
   return (
     <div className="mx-auto max-w-2xl px-4 sm:pb-6 lg:max-w-7xl lg:px-8">
