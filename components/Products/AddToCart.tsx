@@ -4,6 +4,7 @@ import { GET_ALL_PRODUCTResult } from "@/sanity.types";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
 import useBasketStore from "@/store/store";
+import { ShoppingCart } from "lucide-react";
 
 type AddToBasketProp = {
   data: GET_ALL_PRODUCTResult;
@@ -46,7 +47,8 @@ function AddToCart({ data, disabled }: AddToBasketProp) {
           disabled={disabled}
           onClick={() => handleAddToCart(data[0])}
         >
-          Add To Cart
+          <span className="md:hidden">Add To Cart</span>
+          <ShoppingCart />
         </Button>
       )}
     </>
