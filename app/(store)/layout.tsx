@@ -5,7 +5,6 @@ import "../globals.css";
 import NavBar from "@/components/NavBarComponents/NavBar";
 import Footer from "@/components/Footer";
 import ToggleContext from "@/context/toggleContext";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -37,9 +36,9 @@ export default function RootLayout({
           <header className="w-full shadow sticky top-0 bg-background z-20">
             <NavBar />
           </header>
-          <NuqsAdapter>
-            <main className="py-4">{children}</main>
-          </NuqsAdapter>
+
+          <main className="py-4">{children}</main>
+
           <footer className="w-full">
             <Footer />
           </footer>
