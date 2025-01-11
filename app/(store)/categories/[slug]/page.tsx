@@ -1,7 +1,9 @@
-import CategoryCard from "@/components/CategoryCard";
+import Category from "@/components/CategorySection/Category";
+import LoadingSpinner from "@/components/Loader";
+// import CategoryCard from "@/components/CategoryCard";
 import SelectCategories from "@/components/Select";
 import { getCategories } from "@/sanity/lib/products/getCategories";
-import { getProductsByCategories } from "@/sanity/lib/products/getProductsByCategories";
+// import { getProductsByCategories } from "@/sanity/lib/products/getProductsByCategories";
 import { Suspense } from "react";
 
 async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -9,7 +11,7 @@ async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
 
   const newSlug = decodeURIComponent(slug || "");
 
-  const productByCategory = await getProductsByCategories(newSlug);
+  // const productByCategory = await getProductsByCategories(newSlug);
 
   const data = await getCategories();
 
@@ -22,8 +24,9 @@ async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
           </h1>
           <SelectCategories categories={data} />
           <div>
-            <Suspense fallback={<div>Loading...</div>}>
-              <CategoryCard data={productByCategory} />
+            <Suspense fallback={<LoadingSpinner />}>
+              {/* <CategoryCard data={productByCategory} /> */}
+              <Category newSlug={newSlug} />
             </Suspense>
           </div>
         </div>

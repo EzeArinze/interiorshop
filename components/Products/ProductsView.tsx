@@ -7,8 +7,6 @@ import { AnimatePresence, motion } from "motion/react";
 import ProductImage from "./ProductImage";
 import { ProductViewProp } from "@/lib/types";
 
-import AddToCart from "./AddToCart";
-
 function ProductsView({ data }: ProductViewProp) {
   return (
     <>
@@ -43,11 +41,6 @@ function ProductsView({ data }: ProductViewProp) {
                     <span className="text-green-600 md:text-left w-[100%]">
                       ${product.price}
                     </span>
-
-                    <AddToCart
-                      data={[product]}
-                      disabled={product.stock === 0}
-                    />
                   </div>
                 </div>
               </div>

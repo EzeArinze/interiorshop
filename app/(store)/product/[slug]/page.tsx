@@ -1,5 +1,6 @@
 // import dynamic from "next/dynamic";
 
+import LoadingSpinner from "@/components/Loader";
 import ProductDetails from "@/components/Products/ProductDetails";
 // import { revalidatePath } from "next/cache";
 import React, { Suspense } from "react";
@@ -16,7 +17,7 @@ async function Details({ params }: { params: Promise<{ slug: string }> }) {
       <h1 className="text-2xl font-semibold text-gray-800 px-3">
         Product Details
       </h1>
-      <Suspense key={slug} fallback={<div>Loading...</div>}>
+      <Suspense key={slug} fallback={<LoadingSpinner />}>
         <ProductDetails slug={slug} />
       </Suspense>
     </div>

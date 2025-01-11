@@ -1,8 +1,8 @@
 import { PRODUCT_DETIALResult } from "@/sanity.types";
 import { productDetail } from "@/sanity/lib/products/productDetails";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import { urlFor } from "@/sanity/lib/image";
+import AddToCart from "./AddToCart";
 
 interface ProductDetailsProps {
   slug: string;
@@ -16,7 +16,7 @@ const ProductDetails = async ({ slug }: ProductDetailsProps) => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 ">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 items-start">
         {/* Image Section */}
         <div className="w-full">
@@ -29,6 +29,18 @@ const ProductDetails = async ({ slug }: ProductDetailsProps) => {
               className="rounded object-cover object-center"
               priority
             />
+          </div>
+          <div className="mt-2 border-t-2 pt-2">
+            {Detail?.images?.map((image, index) => (
+              <Image
+                key={index}
+                src={image ? urlFor(image).width(50).height(50).url() : ""}
+                alt={image.asset?._ref || ""}
+                height={80}
+                width={60}
+                className="rounded object-cover object-center w-auto h-auto"
+              />
+            ))}
           </div>
         </div>
 
@@ -44,9 +56,7 @@ const ProductDetails = async ({ slug }: ProductDetailsProps) => {
             ${Detail.price}
           </div>
 
-          <Button className="w-full lg:w-auto px-6 py-3 text-white font-medium rounded hover:bg-secondary transition-colors">
-            Add to Cart
-          </Button>
+          <AddToCart data={Detail} />
         </div>
       </div>
     </div>

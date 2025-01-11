@@ -27,16 +27,12 @@ function SelectCategories({ categories }: Category) {
 
     params.set("category", value);
 
-    console.log(params.get("category"));
+    // Update the browser's URL without reloading the page
+    const newUrl = `/categories/${params.get("category")}`;
+    // window.history.pushState({}, "", newUrl);
 
-    router.push(`/categories/${params.get("category")}`);
+    router.push(newUrl);
   };
-
-  // const handleChange = (value: string | null): void => {
-  //   if (!value) return;
-
-  //   router.push(`/categories/${value}`);
-  // };
 
   return (
     <section className="mx-auto max-w-2xl px-4 sm:pb-6 lg:max-w-7xl lg:px-4">

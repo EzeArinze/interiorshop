@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import ProductImage from "./Products/ProductImage";
+import ProductImage from "../Products/ProductImage";
 import { CategoryProps } from "@/lib/types";
 
 const CategoryCard = ({ data }: CategoryProps) => {
   return (
-    <div className="container mx-auto mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div className="container mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <AnimatePresence>
         {data.map((product) => (
           <motion.div
@@ -16,7 +16,7 @@ const CategoryCard = ({ data }: CategoryProps) => {
             initial={{ opacity: 0.5 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-white shadow-md rounded-lg overflow-hidden group w-[75%]"
+            className="bg-white shadow-md rounded-lg overflow-hidden group "
           >
             {/* Category Image */}
 

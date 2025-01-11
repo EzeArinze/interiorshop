@@ -1,10 +1,10 @@
 "use client";
 
-import { GET_ALL_PRODUCTResult } from "@/sanity.types";
+import { PRODUCT_DETIALResult } from "@/sanity.types";
 import useBasketStore from "@/store/store";
 
 type AddToBasketProp = {
-  data: GET_ALL_PRODUCTResult[number]; // Expecting a single product object
+  data: PRODUCT_DETIALResult; // Expecting a single product object
 };
 
 function DecIncButton({ data }: AddToBasketProp) {
@@ -15,7 +15,9 @@ function DecIncButton({ data }: AddToBasketProp) {
   };
 
   const handleRemoveFromCart = () => {
-    removeItem(data._id);
+    if (data?._id) {
+      removeItem(data._id);
+    }
   };
 
   return (
@@ -28,7 +30,7 @@ function DecIncButton({ data }: AddToBasketProp) {
           -
         </button>
         <span className="px-3 text-sm md:text-base">
-          {getItemCount(data._id)}
+          {data ? getItemCount(data._id) : 0}
         </span>
         <button
           className="px-2 py-1 text-sm md:text-base bg-gray-100"

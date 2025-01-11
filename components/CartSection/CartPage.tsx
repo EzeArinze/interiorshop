@@ -22,7 +22,7 @@ export default function CartPage() {
 
   const calculateSubtotal = () =>
     getGroupedItem.reduce(
-      (total, item) => total + (item.product.price ?? 0) * item.quantity,
+      (total, item) => total + (item.product?.price ?? 0) * item.quantity,
       0
     );
 
@@ -36,39 +36,42 @@ export default function CartPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Product List */}
           <div className="lg:col-span-2 space-y-4">
-            {getGroupedItem.map((item) => (
-              <div
-                key={item.product._id}
-                className="flex items-center border p-4 rounded-md shadow-sm"
-              >
-                <Image
-                  src={
-                    item?.product?.firstImage
-                      ? urlFor(item.product.firstImage)
-                          .width(80)
-                          .height(80)
-                          .url()
-                      : ""
-                  }
-                  alt={item.product.name || "Cart images"}
-                  width={80}
-                  height={80}
-                  className="rounded"
-                />
-                <div className="ml-4 flex-grow">
-                  <h2 className="text-md md:text-lg font-medium">
-                    {item.product.name}
-                  </h2>
+            {getGroupedItem.map(
+              (item) =>
+                item.product && (
+                  <div
+                    key={item.product?._id}
+                    className="flex items-center border p-4 rounded-md shadow-sm"
+                  >
+                    <Image
+                      src={
+                        item?.product?.images?.[0] || ""
+                          ? urlFor(item.product?.images?.[0] ?? "")
+                              .width(80)
+                              .height(80)
+                              .url()
+                          : ""
+                      }
+                      alt={item.product?.name || "Cart images"}
+                      width={80}
+                      height={80}
+                      className="rounded"
+                    />
+                    <div className="ml-4 flex-grow">
+                      <h2 className="text-md md:text-lg font-medium">
+                        {item.product?.name}
+                      </h2>
 
-                  <div className="mt-2 flex items-center">
-                    <DecIncButton data={item.product} />
+                      <div className="mt-2 flex items-center">
+                        <DecIncButton data={item.product} />
+                      </div>
+                    </div>
+                    <div className="text-md md:text-lg font-medium text-right">
+                      ${item.product.price?.toFixed(2) ?? "0.00"}
+                    </div>
                   </div>
-                </div>
-                <div className="text-md md:text-lg font-medium text-right">
-                  ${item.product.price?.toFixed(2) ?? "0.00"}
-                </div>
-              </div>
-            ))}
+                )
+            )}
           </div>
 
           {/* Summary Section */}

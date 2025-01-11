@@ -1,20 +1,21 @@
 "use client";
 
-import { GET_ALL_PRODUCTResult } from "@/sanity.types";
+import { PRODUCT_DETIALResult } from "@/sanity.types";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
 import useBasketStore from "@/store/store";
 import { ShoppingCart } from "lucide-react";
 
 type AddToBasketProp = {
-  data: GET_ALL_PRODUCTResult;
-  disabled?: boolean | undefined;
+  data: PRODUCT_DETIALResult;
 };
 
-function AddToCart({ data, disabled }: AddToBasketProp) {
+function AddToCart({ data }: AddToBasketProp) {
   const { addItem, getItemCount, items, removeItem } = useBasketStore();
 
-  const alreadyExist = !!items.find((item) => item.product._id === data[0]._id);
+  const alreadyExist = !!items.find(
+    (item) => item.product && data && item.product._id === data._id
+  );
 
   const [isClient, setIsClient] = useState(false);
 
@@ -24,9 +25,11 @@ function AddToCart({ data, disabled }: AddToBasketProp) {
 
   if (!isClient) return null;
 
-  const handleAddToCart = (value: GET_ALL_PRODUCTResult[number]) => {
+  const handleAddToCart = (value: PRODUCT_DETIALResult) => {
     addItem(value);
-    getItemCount(value._id);
+    if (value?._id) {
+      getItemCount(value._id);
+    }
   };
 
   return (
@@ -35,19 +38,19 @@ function AddToCart({ data, disabled }: AddToBasketProp) {
         <Button
           className="rounded font-semibold text-gray-800 hover:text-white w-full sm:w-auto sm:px-2 md:px-2"
           variant={"outline"}
-          disabled={disabled}
-          onClick={() => removeItem(data[0]._id)}
+          onClick={() => data && removeItem(data._id)}
         >
-          Remove
+          <span>Remove From Cart</span>
+          <ShoppingCart />
         </Button>
       ) : (
         <Button
           className="rounded font-semibold text-gray-800 hover:text-white w-full sm:w-auto sm:px-2 md:px-2"
           variant={"outline"}
-          disabled={disabled}
-          onClick={() => handleAddToCart(data[0])}
+          disabled={alreadyExist}
+          onClick={() => data && handleAddToCart(data)}
         >
-          <span className="md:hidden">Add To Cart</span>
+          <span>Add To Cart</span>
           <ShoppingCart />
         </Button>
       )}

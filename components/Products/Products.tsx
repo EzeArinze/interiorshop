@@ -1,6 +1,8 @@
 import { getProducts } from "@/sanity/lib/products/getProduct";
 import ProductsView from "./ProductsView";
 
+export const revalidate = 60;
+
 async function Products() {
   const data = await getProducts();
 

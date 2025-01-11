@@ -5,6 +5,8 @@ import SelectCategories from "@/components/Select";
 import { getCategories } from "@/sanity/lib/products/getCategories";
 import { Suspense } from "react";
 
+export const revalidate = 60;
+
 export default async function Home() {
   const categories = await getCategories();
 
