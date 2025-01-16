@@ -4,7 +4,7 @@ import { sanityFetch } from "../live";
 
 export async function productDetail(slug: string) {
   const PRODUCT_DETIAL = defineQuery(
-    `*[_type == "product" && slug.current == "${slug}"][0]`
+    `*[_type == "product" && slug.current == $slug][0]`
   );
 
   try {

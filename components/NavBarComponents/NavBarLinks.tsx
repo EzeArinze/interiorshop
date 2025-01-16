@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Cart from "./Cart";
-import { Button } from "../ui/button";
-import { useHamburger } from "@/context/toggleContext";
-import { Heart } from "lucide-react";
 import useBasketStore from "@/store/store";
+import { Button } from "../ui/button";
+import { LoginLink, useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import ProfileAvatar from "../ProfileAvater";
 
 function NavBarLinks() {
   const pathname = usePathname();
-  const { toggle } = useHamburger();
+  const { user } = useKindeBrowserClient();
+
   const itemCount = useBasketStore((state) =>
     state.items.reduce((total, acc) => total + acc.quantity, 0)
   );
@@ -31,19 +32,6 @@ function NavBarLinks() {
         </div>
       </nav>
 
-      <div>
-        <Button
-          variant={"outline"}
-          className="hidden md:block font-semibold text-gray-500 transition duration-100 hover:text-gray-100 hover:bg-primary rounded"
-          onClick={toggle}
-        >
-          <span className="flex items-center gap-2">
-            <p>Faverites</p>
-            <Heart />
-          </span>
-        </Button>
-      </div>
-
       <div className="relative">
         <Link href="/cart">
           <Cart />
@@ -52,6 +40,34 @@ function NavBarLinks() {
           <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
             {itemCount}
           </span>
+        )}
+      </div>
+
+      <div>
+        {/* <Link
+          href={"/sign-in"}
+          className="flex items-center gap-1 rounded hover:bg-primary hover:text-white border py-1 px-3"
+        >
+          <span className="flex items-center gap-2">
+            <User2 className="w-4 h-4" />
+            <p className="hidden md:block">Login</p>
+          </span>
+        </Link> */}
+
+        {!user ? (
+          <LoginLink>
+            <Button
+              variant={"outline"}
+              className="rounded hover:bg-primary hover:text-white border px-3"
+            >
+              Login
+            </Button>
+          </LoginLink>
+        ) : (
+          <ProfileAvatar
+            imageUrl={user?.picture || ""}
+            name={user?.given_name || ""}
+          />
         )}
       </div>
     </div>

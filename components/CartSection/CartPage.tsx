@@ -8,6 +8,7 @@ import useBasketStore from "@/store/store";
 import { urlFor } from "@/sanity/lib/image";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../Loader";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 export default function CartPage() {
   const getGroupedItem = useBasketStore((state) => state.getGroupedItem());
@@ -67,7 +68,8 @@ export default function CartPage() {
                       </div>
                     </div>
                     <div className="text-md md:text-lg font-medium text-right">
-                      ${item.product.price?.toFixed(2) ?? "0.00"}
+                      {formatCurrency(Number(item.product.price?.toFixed(2)))}
+                      {/* ${item.product.price?.toFixed(2) ?? "0.00"} */}
                     </div>
                   </div>
                 )

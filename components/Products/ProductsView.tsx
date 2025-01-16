@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import ProductImage from "./ProductImage";
 import { ProductViewProp } from "@/lib/types";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 function ProductsView({ data }: ProductViewProp) {
   return (
@@ -38,8 +39,9 @@ function ProductsView({ data }: ProductViewProp) {
                   </Link>
 
                   <div className="mt-2 font-bold text-md flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
-                    <span className="text-green-600 md:text-left w-[100%]">
-                      ${product.price}
+                    <span className="text-green-600 md:text-left w-[100%] text-sm">
+                      {formatCurrency(product.price || 0)}
+                      {/* N{product.price} */}
                     </span>
                   </div>
                 </div>

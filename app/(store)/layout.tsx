@@ -4,7 +4,8 @@ import "../globals.css";
 
 import NavBar from "@/components/NavBarComponents/NavBar";
 import Footer from "@/components/Footer";
-import ToggleContext from "@/context/toggleContext";
+
+// import ToggleContext from "@/context/toggleContext";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -29,21 +30,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ToggleContext>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased grid grid-rows-[auto_1fr_auto] items-stretch min-h-dvh`}
-        >
-          <header className="w-full shadow sticky top-0 bg-background z-20">
-            <NavBar />
-          </header>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased grid grid-rows-[auto_1fr_auto] items-stretch min-h-dvh`}
+      >
+        <header className="w-full shadow sticky top-0 bg-background z-20">
+          <NavBar />
+        </header>
 
-          <main className="py-4">{children}</main>
+        <main className="py-4">{children}</main>
 
-          <footer className="w-full">
-            <Footer />
-          </footer>
-        </body>
-      </ToggleContext>
+        <footer className="w-full">
+          <Footer />
+        </footer>
+      </body>
     </html>
   );
 }

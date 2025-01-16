@@ -3,6 +3,9 @@ import { productDetail } from "@/sanity/lib/products/productDetails";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import AddToCart from "./AddToCart";
+import { formatCurrency } from "@/lib/formatCurrency";
+
+export const revalidate = 60;
 
 interface ProductDetailsProps {
   slug: string;
@@ -53,7 +56,8 @@ const ProductDetails = async ({ slug }: ProductDetailsProps) => {
           <p className="text-lg text-gray-600 mb-6">{Detail.description}</p>
 
           <div className="text-xl font-semibold text-green-700 mb-6">
-            ${Detail.price}
+            {formatCurrency(Detail.price || 0)}
+            {/* ${Detail.price} */}
           </div>
 
           <AddToCart data={Detail} />

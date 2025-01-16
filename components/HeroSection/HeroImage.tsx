@@ -1,14 +1,9 @@
-import { Banner_QueryResult } from "@/sanity.types";
+import { HeroImageType } from "@/lib/types";
+// import { Banner_QueryResult } from "@/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 
-type HeroImageType = {
-  image: Banner_QueryResult;
-};
-
 async function HeroImage({ image }: HeroImageType) {
-  // if (image.length < 1) return <p>No Hero Image</p>;
-
   return (
     <div className="mb-12 flex w-full md:mb-16 lg:w-2/3">
       <div className="relative left-12 top-12 z-10 -ml-12 overflow-hidden rounded-xl bg-gray-100 shadow-lg md:left-16 md:top-16 lg:ml-0">
