@@ -2,8 +2,8 @@ const FooterSection = () => {
   const date = new Date().getFullYear();
 
   return (
-    <footer className="bg-secondary text-gray-700 py-8">
-      <div className="container mx-auto px-4">
+    <footer className=" bg-secondary text-gray-700 py-8">
+      <div className="md:w-[80%] container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* About Section */}
           <div>
@@ -16,14 +16,14 @@ const FooterSection = () => {
           </div>
 
           {/* Contact Section */}
-          <div>
+          {/* <div>
             <h3 className="text-lg font-semibold mb-4">Contact</h3>
             <p className="text-sm">Email: support@example.com</p>
             <p className="text-sm">Phone: +1 234 567 890</p>
             <p className="text-sm">
               Address: 123 Interior St, Suite 100, City, Country
             </p>
-          </div>
+          </div> */}
         </div>
 
         {/* Footer Bottom Section */}

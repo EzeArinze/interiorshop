@@ -46,7 +46,7 @@ export default function ProfileAvatar({ imageUrl, name }: ProfileAvatarProps) {
           </Avatar>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-56 rounded bg-secondary" align="end">
+      <PopoverContent className="w-48 rounded bg-secondary" align="end">
         <div className="grid gap-4 ">
           {name && <div className="font-medium">{name}</div>}
           <div className="grid gap-2">

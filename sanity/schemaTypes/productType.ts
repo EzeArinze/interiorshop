@@ -59,7 +59,7 @@ export const product = defineType({
     prepare(select) {
       return {
         title: select.title,
-        subtitle: `$${select.subtitle}`,
+        subtitle: `NGN${select.subtitle}`,
         media: select.media.at(0),
       };
     },

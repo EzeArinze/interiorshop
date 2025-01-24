@@ -28,7 +28,7 @@ export default function CartPage() {
     );
 
   return (
-    <div className="container mx-auto p-4">
+    <section className="container mx-auto p-4">
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
         Your Cart
       </h1>
@@ -77,11 +77,14 @@ export default function CartPage() {
           </div>
 
           {/* Summary Section */}
-          <CartSummary calculateSubtotal={calculateSubtotal} />
+          <CartSummary
+            calculateSubtotal={calculateSubtotal}
+            items={getGroupedItem}
+          />
         </div>
       ) : (
         <EmptyCart />
       )}
-    </div>
+    </section>
   );
 }
