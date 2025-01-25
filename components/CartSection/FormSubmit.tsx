@@ -1,9 +1,9 @@
-// // Form component (Form.tsx)
 // import { useState } from "react";
 // import { Button } from "../ui/button";
 // import { Input } from "../ui/input";
 // import { Label } from "../ui/label";
-// import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+// import { User } from "@/lib/types";
+// // import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 // export type FormDataType = {
 //   fullName: string;
@@ -13,11 +13,12 @@
 
 // type FormProps = {
 //   onSubmit: (formData: FormDataType) => void;
+//   user: User | null;
 // };
 
-// const Form = ({ onSubmit }: FormProps) => {
-//   const { user } = useKindeBrowserClient();
-
+// const Form = ({ onSubmit, user }: FormProps) => {
+//   // const { user } = useKindeBrowserClient();
+//   // console.log("User:", user);
 //   const [formData, setFormData] = useState<FormDataType>({
 //     fullName: "",
 //     address: "",
@@ -95,9 +96,10 @@
 //       <Button
 //         type="submit"
 //         className="w-full mt-4 bg-primary text-white py-2 rounded font-semibold"
-//         disabled={!user}
+//         // disabled={!user}
 //       >
-//         {user ? "Proceed to Checkout" : "Login to checkout"}
+//         {/* {user ? "Proceed to Payment" : "Login to checkout"} */}
+//         Proceed to Payment
 //       </Button>
 //     </form>
 //   );
@@ -109,14 +111,10 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { User } from "@/lib/types";
-// import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import type { User } from "@/lib/types";
 
-export type FormDataType = {
-  fullName: string;
-  address: string;
-  city: string;
-};
+import { z } from "zod";
+import { FormDataType, formSchema } from "@/lib/formSchema";
 
 type FormProps = {
   onSubmit: (formData: FormDataType) => void;
@@ -124,33 +122,45 @@ type FormProps = {
 };
 
 const Form = ({ onSubmit, user }: FormProps) => {
-  // const { user } = useKindeBrowserClient();
-  // console.log("User:", user);
   const [formData, setFormData] = useState<FormDataType>({
     fullName: "",
     address: "",
     city: "",
   });
 
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof FormDataType, string>>
+  >({});
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear the error when the user starts typing
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.fullName || !formData.address || !formData.city) {
-      alert("Please fill in all the fields.");
-      return;
+    try {
+      const validatedData = formSchema.parse(formData);
+      onSubmit(validatedData);
+      setFormData({
+        fullName: "",
+        address: "",
+        city: "",
+      });
+      setErrors({});
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setErrors(
+          error.flatten().fieldErrors as Partial<
+            Record<keyof FormDataType, string>
+          >
+        );
+      }
+    } finally {
     }
-
-    onSubmit(formData);
-    setFormData({
-      fullName: "",
-      address: "",
-      city: "",
-    });
   };
 
   return (
@@ -163,11 +173,13 @@ const Form = ({ onSubmit, user }: FormProps) => {
           id="fullName"
           name="fullName"
           type="text"
-          required
           value={formData.fullName}
           onChange={handleInputChange}
           className="w-full p-1 border rounded"
         />
+        {errors.fullName && (
+          <p className="text-red-500 text-sm">{errors.fullName}</p>
+        )}
       </div>
 
       <div className="space-y-1">
@@ -178,11 +190,13 @@ const Form = ({ onSubmit, user }: FormProps) => {
           id="address"
           name="address"
           type="text"
-          required
           value={formData.address}
           onChange={handleInputChange}
           className="w-full p-1 border rounded"
         />
+        {errors.address && (
+          <p className="text-red-500 text-sm">{errors.address}</p>
+        )}
       </div>
 
       <div className="space-y-1">
@@ -193,20 +207,18 @@ const Form = ({ onSubmit, user }: FormProps) => {
           id="city"
           name="city"
           type="text"
-          required
           value={formData.city}
           onChange={handleInputChange}
           className="w-full p-1 border rounded"
         />
+        {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
       </div>
 
       <Button
         type="submit"
         className="w-full mt-4 bg-primary text-white py-2 rounded font-semibold"
-        disabled={!user}
       >
-        {!user ? "Login to checkout" : "Proceed to Payment"}
-        {/* Proceed to Payment */}
+        Proceed to Payment
       </Button>
     </form>
   );

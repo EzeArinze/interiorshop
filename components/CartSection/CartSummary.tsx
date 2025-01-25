@@ -65,13 +65,18 @@
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Form, { type FormDataType } from "./FormSubmit";
-import { useEffect } from "react";
+import Form from "./FormSubmit";
 import { initializePayment } from "./initializePayment";
+import Script from "next/script";
 
 type CartSummaryType = {
   calculateSubtotal: () => number;
   items: unknown[];
+};
+type FormDataType = {
+  fullName: string;
+  address: string;
+  city: string;
 };
 
 function CartSummary({ calculateSubtotal, items }: CartSummaryType) {
@@ -79,17 +84,6 @@ function CartSummary({ calculateSubtotal, items }: CartSummaryType) {
   // const [error, setError] = useState<string | null>(null);
   const price = (calculateSubtotal() + 20).toFixed(2);
   const subTotal = calculateSubtotal().toFixed(2);
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://js.paystack.co/v1/inline.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
 
   const handleFormSubmit = (formData: FormDataType) => {
     const orderData = {
@@ -105,6 +99,7 @@ function CartSummary({ calculateSubtotal, items }: CartSummaryType) {
 
   return (
     <section className="bg-secondary p-6 rounded shadow-md md:w-1/2 lg:w-full">
+      <Script src={process.env.SCRIPT_SRC || ""} strategy="afterInteractive" />
       <h2 className="text-xl font-bold mb-4">Order Summary</h2>
 
       <div className="flex justify-between mb-2">
@@ -125,15 +120,15 @@ function CartSummary({ calculateSubtotal, items }: CartSummaryType) {
       {/* {error && <div className="text-red-500 mt-4 mb-4">{error}</div>} */}
 
       {/* Only signed in users can access the form */}
-      {user ? (
+      {/* {user ? (
         <Form onSubmit={handleFormSubmit} user={user} />
       ) : (
         <p className="text-center pt-2 font-semibold text-gray-800 border-t-2">
           Login To Checkout
         </p>
-      )}
+      )} */}
 
-      {/* <Form onSubmit={handleFormSubmit} user={user} /> */}
+      <Form onSubmit={handleFormSubmit} user={user} />
 
       <Button
         variant="outline"
