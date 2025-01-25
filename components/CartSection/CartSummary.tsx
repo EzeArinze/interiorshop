@@ -92,6 +92,7 @@ function CartSummary({ calculateSubtotal, items }: CartSummaryType) {
       total: Number(price),
       items,
       email: user?.email || "test@example.com",
+      userId: user?.id || "",
     };
 
     initializePayment(orderData); // Paystack expects amount in kobo

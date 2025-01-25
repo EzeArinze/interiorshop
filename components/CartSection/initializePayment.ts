@@ -28,11 +28,12 @@
 //   }
 // };
 
-interface OrderData {
+export type OrderData = {
   email: string;
   total: number;
   [key: string]: unknown; // Add other properties as needed
-}
+  userId: string;
+};
 
 export const initializePayment = async (orderData: OrderData) => {
   try {
