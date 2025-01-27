@@ -21,7 +21,9 @@ export default async function Home() {
     <div className="md:w-[80%] mx-auto py-8">
       <Hero image={heroImage} />
 
-      <SelectCategories categories={categories} />
+      <Suspense fallback={<LoadingSpinner />}>
+        <SelectCategories categories={categories} />
+      </Suspense>
 
       <Suspense fallback={<LoadingSpinner />}>
         <Products />
