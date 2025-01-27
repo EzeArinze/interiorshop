@@ -367,14 +367,14 @@
         },
         "optional": true
       },
-      "stripeCheckoutSessionId": {
+      "paystackCheckoutSessionId": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
         "optional": true
       },
-      "clerkUserId": {
+      "kindeUserId": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -395,7 +395,7 @@
         },
         "optional": true
       },
-      "stripePaymentIntentId": {
+      "paystackPaymentIntentId": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -473,13 +473,6 @@
         "type": "objectAttribute",
         "value": {
           "type": "string"
-        },
-        "optional": true
-      },
-      "amountDiscount": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "number"
         },
         "optional": true
       },

@@ -75,11 +75,11 @@ export type Order = {
   _updatedAt: string;
   _rev: string;
   orderNumber?: string;
-  stripeCheckoutSessionId?: string;
-  clerkUserId?: string;
+  paystackCheckoutSessionId?: string;
+  kindeUserId?: string;
   customerName?: string;
   email?: string;
-  stripePaymentIntentId?: string;
+  paystackPaymentIntentId?: string;
   products?: Array<{
     product?: {
       _ref: string;
@@ -92,7 +92,6 @@ export type Order = {
   }>;
   totalPrice?: number;
   currency?: string;
-  amountDiscount?: number;
   status?: "pending" | "paid" | "shipped" | "delivered" | "cancelled";
   orderDate?: string;
 };
@@ -232,7 +231,22 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Order | Category | Product | Slug | BannerImage | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityFileAsset
+  | Geopoint
+  | Order
+  | Category
+  | Product
+  | Slug
+  | BannerImage
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/bannerImage/getBannerImage.ts
 // Variable: Banner_Query
@@ -260,6 +274,33 @@ export type Banner_QueryResult = Array<{
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
+}>;
+
+// Source: ./sanity/lib/order/getOrders.ts
+// Variable: GET_ORDER
+// Query: *[_type == "order" && kindeUserId == $userId] | order(orderDate desc) {    _id,    orderNumber,    paystackCheckoutSessionId,    kindeUserId,    customerName,    email,    paystackPaymentIntentId,    products[] {      product-> {        _id,        name,        price,        currency,        "imageUrl": images[0].asset->url      },      quantity    },    totalPrice,    currency,    status,    orderDate  }
+export type GET_ORDERResult = Array<{
+  _id: string;
+  orderNumber: string | null;
+  paystackCheckoutSessionId: string | null;
+  kindeUserId: string | null;
+  customerName: string | null;
+  email: string | null;
+  paystackPaymentIntentId: string | null;
+  products: Array<{
+    product: {
+      _id: string;
+      name: string | null;
+      price: number | null;
+      currency: null;
+      imageUrl: string | null;
+    } | null;
+    quantity: number | null;
+  }> | null;
+  totalPrice: number | null;
+  currency: string | null;
+  status: "cancelled" | "delivered" | "paid" | "pending" | "shipped" | null;
+  orderDate: string | null;
 }>;
 
 // Source: ./sanity/lib/products/getCategories.ts
@@ -335,7 +376,7 @@ export type PRODUCT_BY_CATEGORIES_QUERYResult = Array<{
 
 // Source: ./sanity/lib/products/productDetails.ts
 // Variable: PRODUCT_DETIAL
-// Query: *[_type == "product" && slug.current == "lamp"][0]
+// Query: *[_type == "product" && slug.current == $slug][0]
 export type PRODUCT_DETIALResult = {
   _id: string;
   _type: "product";
@@ -366,16 +407,17 @@ export type PRODUCT_DETIALResult = {
     [internalGroqTypeReferenceTo]?: "category";
   }>;
   stock?: number;
-} | null;
+};
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"bannerImage\"] {\n    \"firstImage\": image1,\n    \"secondImage\": image2\n  }": Banner_QueryResult;
-    "*[_type == \"category\"]|order(name asc)": GET_CATEGORIESResult;
-    "*[_type == \"product\"] | order(name asc) {_id,name,\n    price,\"firstImage\":images[0],stock,slug}\n  ": GET_ALL_PRODUCTResult;
-    "\n    *[_type == \"product\" && references(*[_type == \"category\" && slug.current == $categorySlug][0]._id)]\n  ": PRODUCT_BY_CATEGORIES_QUERYResult;
-    "*[_type == \"product\" && slug.current == \"lamp\"][0]": PRODUCT_DETIALResult;
+    '*[_type == "bannerImage"] {\n    "firstImage": image1,\n    "secondImage": image2\n  }': Banner_QueryResult;
+    '*[_type == "order" && kindeUserId == $userId] | order(orderDate desc) {\n    _id,\n    orderNumber,\n    paystackCheckoutSessionId,\n    kindeUserId,\n    customerName,\n    email,\n    paystackPaymentIntentId,\n    products[] {\n      product-> {\n        _id,\n        name,\n        price,\n        currency,\n        "imageUrl": images[0].asset->url\n      },\n      quantity\n    },\n    totalPrice,\n    currency,\n    status,\n    orderDate\n  }\n': GET_ORDERResult;
+    '*[_type == "category"]|order(name asc)': GET_CATEGORIESResult;
+    '*[_type == "product"] | order(name asc) {_id,name,\n    price,"firstImage":images[0],stock,slug}\n  ': GET_ALL_PRODUCTResult;
+    '\n    *[_type == "product" && references(*[_type == "category" && slug.current == $categorySlug][0]._id)]\n  ': PRODUCT_BY_CATEGORIES_QUERYResult;
+    '*[_type == "product" && slug.current == $slug][0]': PRODUCT_DETIALResult;
   }
 }

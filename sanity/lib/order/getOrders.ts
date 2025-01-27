@@ -34,10 +34,9 @@ export async function fetchOrders(userId: string) {
       query: GET_ORDER,
       params: { userId },
     });
-
-    return order.data || {};
+    return order.data || [];
   } catch (error) {
     console.log("Failed to get the details", error);
-    return {};
+    return [];
   }
 }
