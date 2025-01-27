@@ -60,7 +60,9 @@ export default function ProfileAvatar({ imageUrl, name }: ProfileAvatarProps) {
               <span className="px-2">Orders</span>
             </Link>
 
-            <LogoutLink>
+            <LogoutLink
+              postLogoutRedirectURL={process.env.KINDE_POST_LOGOUT_REDIRECT_URL}
+            >
               <Button
                 variant="ghost"
                 className="justify-start hover:bg-primary hover:text-white rounded w-full"

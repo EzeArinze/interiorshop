@@ -12,9 +12,7 @@ export const revalidate = 60;
 async function orderPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
-  const order = await fetchOrders(
-    user?.id || "kp_d39439998e63436fb04135302bdb090c"
-  );
+  const order = await fetchOrders(user?.id);
 
   if (!order && order === undefined) return <EmptyOrder />;
 
