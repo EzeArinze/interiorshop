@@ -217,8 +217,9 @@ const Form = ({ onSubmit, user }: FormProps) => {
       <Button
         type="submit"
         className="w-full mt-4 bg-primary text-white py-2 rounded font-semibold"
+        disabled={!user}
       >
-        Proceed to Payment
+        {user ? "Proceed to Payment" : "Login to checkout"}
       </Button>
     </form>
   );
