@@ -94,14 +94,14 @@ export async function POST(req: Request) {
     // Handle successful charge event
     if (event.event === "charge.success") {
       const { reference, customer, metadata } = event.data;
-      const { orderDetails, userId } = metadata;
+      const { orderDetails } = metadata;
 
       // Build order data
       const orderData = {
         _type: "order",
         orderNumber: reference,
         paystackCheckoutSessionId: reference,
-        kindeUserId: userId,
+        kindeUserId: orderDetails.userId,
         customerName: orderDetails.fullName,
         email: customer.email,
         paystackPaymentIntentId: reference,
