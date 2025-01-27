@@ -101,7 +101,7 @@ export async function POST(req: Request) {
         _type: "order",
         orderNumber: reference,
         paystackCheckoutSessionId: reference,
-        kindeUserId: userId || "1234567",
+        kindeUserId: userId,
         customerName: orderDetails.fullName,
         email: customer.email,
         paystackPaymentIntentId: reference,

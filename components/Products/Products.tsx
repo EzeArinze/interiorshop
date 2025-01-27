@@ -36,7 +36,7 @@ async function Products() {
           Discover our curated collection of exquisite interior decor pieces,
           designed to transform your home into a sanctuary of style and comfort.
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 sm:gap-4">
           <ProductsView data={data} />
         </div>
       </div>
