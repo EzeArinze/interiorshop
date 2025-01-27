@@ -7,23 +7,24 @@ export async function fetchOrders(userId: string) {
     _id,
     orderNumber,
     paystackCheckoutSessionId,
+    kindeUserId,
     customerName,
     email,
-    totalPrice,
-    currency,
-    status,
-    orderDate,
+    paystackPaymentIntentId,
     products[] {
-      _key,
-      quantity,
       product-> {
         _id,
         name,
         price,
         currency,
-        "imageUrl": image.asset->url
-      }
-    }
+        "imageUrl": images[0].asset->url
+      },
+      quantity
+    },
+    totalPrice,
+    currency,
+    status,
+    orderDate
   }
 `
   );
