@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductImage from "../Products/ProductImage";
 import { CategoryProps } from "@/lib/types";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 const CategoryCard = ({ data }: CategoryProps) => {
   return (
@@ -16,7 +17,7 @@ const CategoryCard = ({ data }: CategoryProps) => {
             initial={{ opacity: 0.5 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-white shadow-md rounded-lg overflow-hidden group "
+            className="shadow-md rounded-lg overflow-hidden group "
           >
             {/* Category Image */}
 
@@ -32,7 +33,11 @@ const CategoryCard = ({ data }: CategoryProps) => {
                   {product.name}
                 </h3>
               </Link>
-              <p className="text-gray-600 mt-2">${product.price}</p>
+              {product.price !== undefined && (
+                <p className="text-gray-600 mt-2">
+                  {formatCurrency(product.price)}
+                </p>
+              )}
             </div>
           </motion.div>
         ))}

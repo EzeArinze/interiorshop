@@ -4,6 +4,7 @@ import "../globals.css";
 
 import NavBar from "@/components/NavBarComponents/NavBar";
 import Footer from "@/components/Footer";
+import QueryProvider from "@/components/QueryProvider";
 
 // import ToggleContext from "@/context/toggleContext";
 
@@ -37,7 +38,9 @@ export default function RootLayout({
           <NavBar />
         </header>
 
-        <main className="py-4">{children}</main>
+        <main className="py-4">
+          <QueryProvider>{children}</QueryProvider>
+        </main>
 
         <footer className="w-full">
           <Footer />

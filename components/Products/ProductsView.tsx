@@ -15,7 +15,7 @@ function ProductsView({ data }: ProductViewProp) {
         <p className="text-center text-gray-500">No Products Available</p>
       ) : (
         data?.map((product) => (
-          <AnimatePresence key={product.slug?.current}>
+          <AnimatePresence key={product._id}>
             <motion.div
               layout
               initial={{ opacity: 0.5 }}
