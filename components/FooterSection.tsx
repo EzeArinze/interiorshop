@@ -28,7 +28,7 @@ const FooterSection = () => {
 
         {/* Footer Bottom Section */}
         <div className="mt-4 border-t border-primary pt-4 text-center text-sm">
-          <p>&copy; {date} Luxe Design. All Rights Reserved.</p>
+          <p>&copy; {date} Interior Shop. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

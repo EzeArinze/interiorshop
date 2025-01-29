@@ -19,8 +19,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Luxe Design",
-  description: "Top ten interior designer in nigeria",
+  title: "Interior Shop",
+  description: "Top ten and the best interior shop in nigeria",
 };
 
 export default function RootLayout({

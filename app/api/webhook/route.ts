@@ -107,6 +107,8 @@ export async function POST(req: Request) {
         paystackPaymentIntentId: reference,
         totalPrice: Number(orderDetails.total),
         currency: event.data.currency,
+        address: orderDetails.address,
+        city: orderDetails.city,
         orderDate: new Date(event.data.paid_at).toISOString(),
         status: "paid",
         products: orderDetails.items.map(

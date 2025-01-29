@@ -5,7 +5,7 @@ function Logo() {
   return (
     <Link href={"/"} className="font-bold text-2xl">
       {" "}
-      <span className="text-white  bg-primary rounded p-1">Luxe</span> Design
+      <span className="text-white  bg-primary rounded p-1">Interior</span> Shop
     </Link>
   );
 }

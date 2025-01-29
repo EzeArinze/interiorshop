@@ -93,12 +93,18 @@ export const order = defineType({
       type: "string",
       validation: (rule) => rule.required(),
     }),
-    // defineField({
-    //   name: "amountDiscount",
-    //   title: "Amount Discount",
-    //   type: "number",
-    //   validation: (rule) => rule.min(0),
-    // }),
+    defineField({
+      name: "address",
+      title: "Address Name",
+      type: "string",
+      validation: (rule) => rule.min(0),
+    }),
+    defineField({
+      name: "city",
+      title: "City Name",
+      type: "string",
+      validation: (rule) => rule.min(0),
+    }),
     defineField({
       name: "status",
       title: "Order Status",
