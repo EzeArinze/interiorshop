@@ -55,7 +55,6 @@ function ProductsClient({ initialProducts = [] }) {
         pageParams: [0],
       },
       refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
     });
 
   const products = data?.pages.flat() || [];
