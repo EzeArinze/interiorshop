@@ -7,6 +7,9 @@ import { CategoryProps } from "@/lib/types";
 import { formatCurrency } from "@/lib/formatCurrency";
 
 const CategoryCard = ({ data }: CategoryProps) => {
+  if (data.length === 0 && !data)
+    return <h2 className="mx-auto mt-8">No Product for this category yet</h2>;
+
   return (
     <div className="container mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <AnimatePresence>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Form from "./FormSubmit";
 import { initializePayment } from "./initializePayment";
 import Script from "next/script";
+import { formatCurrency } from "@/lib/formatCurrency";
 
 type CartSummaryType = {
   calculateSubtotal: () => number;
@@ -40,19 +41,20 @@ function CartSummary({ calculateSubtotal, items }: CartSummaryType) {
       <Script src={process.env.SCRIPT_SRC || ""} strategy="afterInteractive" />
       <h2 className="text-xl font-bold mb-4">Order Summary</h2>
 
-      <div className="flex justify-between mb-2">
+      <div className="flex justify-between mb-2 text-base ">
         <span>Subtotal</span>
-        <span>{Number(subTotal).toFixed(2)}</span>
+        {/* <span>{Number(subTotal).toFixed(2)}</span> */}
+        <span>{formatCurrency(Number(subTotal))}</span>
       </div>
 
-      <div className="flex justify-between mb-2">
+      <div className="flex justify-between mb-2 text-base">
         <span>Shipping</span>
-        <span>20.00</span>
+        <span>{formatCurrency(2000)}</span>
       </div>
 
-      <div className="flex justify-between font-bold text-lg">
+      <div className="flex justify-between font-bold text-base sm:text-lg">
         <span>Total</span>
-        <span>{Number(price).toFixed(2)}</span>
+        <span>{formatCurrency(Number(price))}</span>
       </div>
 
       {/* {error && <div className="text-red-500 mt-4 mb-4">{error}</div>} */}
