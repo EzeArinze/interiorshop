@@ -20,8 +20,9 @@ type FormDataType = {
 function CartSummary({ calculateSubtotal, items }: CartSummaryType) {
   const { user } = useKindeBrowserClient();
   // const [error, setError] = useState<string | null>(null);
-  const price = (calculateSubtotal() + 20).toFixed(2);
+  const shipping = 2000;
   const subTotal = calculateSubtotal().toFixed(2);
+  const price = (calculateSubtotal() + shipping).toFixed(2);
 
   const handleFormSubmit = (formData: FormDataType) => {
     const orderData = {
