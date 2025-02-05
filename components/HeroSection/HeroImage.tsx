@@ -24,6 +24,7 @@ async function HeroImage({ image }: HeroImageType) {
           width={500}
           height={500}
           priority
+          // layout="responsive"
           className="h-full w-full object-cover object-center"
         />
       </div>
