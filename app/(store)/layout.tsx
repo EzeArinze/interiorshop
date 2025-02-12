@@ -20,7 +20,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Interior Shop",
+  title: "Timeless home style",
   description: "Top ten and the best interior shop in nigeria",
 };
 

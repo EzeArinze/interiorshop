@@ -58,7 +58,7 @@ function NavBarLinks() {
           <LoginLink>
             <Button
               variant={"outline"}
-              className="rounded hover:bg-primary hover:text-white border px-3"
+              className="rounded hover:bg-primary hover:text-white border sm:px-3 p-2"
             >
               Login
             </Button>
