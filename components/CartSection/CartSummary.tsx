@@ -39,7 +39,9 @@ function CartSummary({ calculateSubtotal, items }: CartSummaryType) {
 
   return (
     <section className="bg-secondary p-6 rounded shadow-md md:w-1/2 lg:w-full">
-      <Script src={process.env.SCRIPT_SRC || ""} strategy="afterInteractive" />
+      {process.env.SCRIPT_SRC && (
+        <Script src={process.env.SCRIPT_SRC} strategy="afterInteractive" />
+      )}
       <h2 className="text-xl font-bold mb-4">Order Summary</h2>
 
       <div className="flex justify-between mb-2 text-base ">
