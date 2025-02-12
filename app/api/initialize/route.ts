@@ -5,22 +5,19 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { email, amount, metadata } = body;
 
-    const response = await fetch(
-      "https://api.paystack.co/transaction/initialize",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          amount: Math.round(Number.parseFloat(amount) * 100), // Convert to kobo
-          metadata, // Pass metadata to Paystack
-          callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/paystack/callback`,
-        }),
-      }
-    );
+    const response = await fetch(`${process.env.PAYSTACT_INITIALIZE_URI}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        amount: Math.round(Number.parseFloat(amount) * 100), // Convert to kobo
+        metadata, // Pass metadata to Paystack
+        callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/paystack/callback`,
+      }),
+    });
 
     const data = await response.json();
 
